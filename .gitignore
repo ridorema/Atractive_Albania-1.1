@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__/
+env/
+
+# Flask
+instance/
+.env
+
+# SQLite database
+*.sqlite3
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/

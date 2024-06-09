@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albania Tourist Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #menu {
+            margin: 10px;
+        }
+        iframe {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <button onclick="showMap('Historical Site')">Historical Sites</button>
+        <button onclick="showMap('Beach')">Beaches</button>
+        <button onclick="showMap('Mountain Route')">Mountain Routes</button>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        {% if session.username %}
+        <a href="{{ url_for('add_site') }}">Add Site</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </div>
+    <iframe src="{{ url_for('static', filename='map.html') }}"></iframe>
+
+    <script>
+        function showMap(siteType) {
+            // Load the map with filtered sites based on the category
+            fetch(`/sites/${siteType}`)
+                .then(response => response.json())
+                .then(data => {
+                    var map = L.map('map').setView([41.3275, 19.8189], 7);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+
+                    data.forEach(site => {
+                        var html = `
+                            <h1>${site.name}</h1><br>
+                            <p><b>Category:</b> ${site.category}</p>
+                            <p><b>Typology:</b> ${site.typology}</p>
+                            <p><b>Field:</b> ${site.field}</p>
+                            <p><b>Place:</b> ${site.place}</p>
+                            <p><b>Municipality:</b> ${site.municipality}</p>
+                            <p><b>County:</b> ${site.county}</p>
+                            <p><b>Info:</b> ${site.info}</p>
+                            <p><b>Opening Hours:</b> ${site.opening_hours || 'N/A'}</p>
+                            <p><b>Admission Fee:</b> ${site.admission_fee || 'N/A'}</p>
+                            <p><b>Contact Info:</b> ${site.contact_info || 'N/A'}</p>
+                            <p><b>Tags:</b> ${site.tags || 'N/A'}</p>
+                        `;
+                        if (site.image) {
+                            html += `<img src="/${site.image}" width="200"><br>`;
+                        }
+
+                        var iframe = L.DomUtil.create('div', '');
+                        iframe.innerHTML = html;
+                        var popup = L.popup().setContent(iframe);
+
+                        L.marker([site.latitude, site.longitude], {title: site.name}).addTo(map)
+                            .bindPopup(popup);
+                    });
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .add-site-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .add-site-form h2 {
+            margin: 0 0 15px;
+        }
+        .add-site-form input, .add-site-form select, .add-site-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .add-site-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .add-site-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <form class="add-site-form" method="POST" enctype="multipart/form-data">
+        <h2>Add Site</h2>
+        <input type="text" name="id" value="{{ new_id }}" readonly>
+        <input type="text" name="name" placeholder="Enter site name" required>
+        <select name="category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="Historical Site">Historical Site</option>
+            <option value="Beach">Beach</option>
+            <option value="Mountain Route">Mountain Route</option>
+        </select>
+        <input type="text" name="typology" placeholder="Enter typology (e.g., Castle, Beach)" required>
+        <input type="text" name="field" placeholder="Enter field (e.g., Architecture, Tourism)" required>
+        <input type="text" name="place" placeholder="Enter place name" required>
+        <input type="text" name="municipality" placeholder="Enter municipality name" required>
+        <input type="text" name="county" placeholder="Enter county name" required>
+        <input type="text" name="latitude" placeholder="Enter latitude (e.g., 40.1234)" required>
+        <input type="text" name="longitude" placeholder="Enter longitude (e.g., 19.1234)" required>
+        <textarea name="info" placeholder="Enter additional information about the site" required></textarea>
+        <input type="text" name="opening_hours" placeholder="Enter opening hours (e.g., 9 AM - 5 PM)">
+        <input type="text" name="admission_fee" placeholder="Enter admission fee (e.g., $10)">
+        <input type="text" name="contact_info" placeholder="Enter contact information (e.g., phone, email)">
+        <input type="text" name="tags" placeholder="Enter tags (e.g., family-friendly, historical)">
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Add Site</button>
+    </form>
+</body>
+</html>

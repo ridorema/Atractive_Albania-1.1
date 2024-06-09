@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Components</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {{ header|safe }}
+</head>
+<body>
+    <div class="container">
+        <h2>Using components</h2>
+        {{ body_html|safe }}
+        <script>
+            {{ script|safe }}
+        </script>
+    </div>
+</body>
+</html>
